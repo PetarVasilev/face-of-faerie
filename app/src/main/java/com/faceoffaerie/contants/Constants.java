@@ -40,8 +40,9 @@ public class Constants {
 	}
 
 	public static float getDensity(Context context) {
-		SharedPreferences pref = context.getSharedPreferences(packageName,0);
+		SharedPreferences pref = context.getSharedPreferences(packageName, 0);
 		return pref.getFloat("density", 1.0f);
 
 	}
+
 }

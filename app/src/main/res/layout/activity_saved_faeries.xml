@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:background="@drawable/infoscreenbackground"
+    android:id="@+id/rootRelativeLayout"
+    android:paddingTop="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingBottom="20dp"
+    android:layout_height="match_parent" tools:context=".SplashActivity">
+    <ImageView
+        android:layout_width="210dp"
+        android:id="@+id/titleImageView"
+        android:src="@drawable/savedfaeriesimage"
+        android:layout_centerHorizontal="true"
+        android:layout_height="35dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/titleImageView"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="30dp"
+        android:alpha="0.7"
+        android:background="@drawable/seperator_line"
+        android:layout_height="4dp" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/faeryListView"
+        android:layout_above="@+id/swipeTextView"
+        android:layout_below="@+id/titleImageView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="match_parent"></ListView>
+    <Button
+        android:layout_width="40dp"
+        android:background="@drawable/home"
+        android:id="@+id/homeButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="40dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="&lt;&lt;SWIPE THE FAERY TO THE LEFT IF YOU WISH TO DELETE IT&gt;&gt;"
+        android:id="@+id/swipeTextView"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="11sp"
+        android:textColor="@color/brown_text_color"
+        android:layout_marginLeft="40dp"
+        android:gravity="center"
+        android:layout_above="@+id/homeButton"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

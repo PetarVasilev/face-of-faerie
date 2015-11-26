@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:background="@drawable/infoscreenbackground"
+    android:id="@+id/rootRelativeLayout"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/instructionsImageView"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/instructionslabel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <ImageView
+        android:alpha="0.5"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="60dp"
+        android:id="@+id/seperateImageView"
+        android:layout_below="@+id/instructionsImageView"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/seperator_line"
+        android:layout_height="4dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/contentScrollView"
+        android:scrollbars="none"
+        android:paddingLeft="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:paddingRight="50dp"
+        android:layout_below="@+id/seperateImageView"
+        android:layout_above="@+id/closeButton"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/whatdoesitmeanImageView"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/whatdoesitmean"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:alpha="0.5"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/seperator_line"
+                android:layout_height="4dp" />
+            <ImageView
+                android:id="@+id/howtoImageView"
+                android:src="@drawable/howto"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:layout_width="40dp"
+        android:background="@drawable/close"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/closeButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="40dp" />
+</RelativeLayout>

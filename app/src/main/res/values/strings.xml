@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FaceofFaerie</string>
     <string name="chooseforyou">WHO WILL CHOOSE FOR YOU TODAY?</string>
+    <string name="faery_choose">TOUCH AND HOLD THE CENTER OF THE SYMBOL UNTIL YOUR FAERY REVEALS ITSELF</string>
 </resources>

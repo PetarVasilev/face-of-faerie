@@ -1,15 +1,17 @@
 package com.faceoffaerie.activities;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
-import android.view.Window;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,7 +23,7 @@ import com.faceoffaerie.contants.Constants;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity implements OnClickListener{
 
     @InjectView(R.id.rootRelativeLayout)
     RelativeLayout rootRelativeLayout;
@@ -41,23 +43,22 @@ public class SplashActivity extends Activity {
     @InjectView(R.id.splashImageView)
     ImageView splashImageView;
 
-    @InjectView(R.id.savedFaeriesImageView)
-    ImageView savedFaeriesImageView;
+    @InjectView(R.id.savedFaeriesButton)
+    Button savedFaeriesButton;
 
-    @InjectView(R.id.autoGraphImageView)
-    ImageView autoGraphImageView;
+    @InjectView(R.id.autoGraphButton)
+    Button autoGraphButton;
 
-    @InjectView(R.id.infoImageView)
-    ImageView infoImageView;
+    @InjectView(R.id.infoButton)
+    Button infoButton;
 
     private VideoView videoView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        setLayoutId(this, R.layout.activity_splash);
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_splash);
 
         initView();
         setListener();
@@ -96,16 +97,26 @@ public class SplashActivity extends Activity {
         params.width = (int) (180 * Constants.getDensity(this) * rateX);
         params.height = (int) (90 * Constants.getDensity(this) * rateY);
         faeryChooseImageView.setLayoutParams(params);
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "BarbedorSCTMed.ttf");
+        chooseTextView.setTypeface(typeface);
     }
 
     public void setListener() {
-
+        savedFaeriesButton.setOnClickListener(this);
+        autoGraphButton.setOnClickListener(this);
+        infoButton.setOnClickListener(this);
+        faeryChooseImageView.setOnClickListener(this);
     }
 
     public void initData() {
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash_animation_640x1136);
         videoView = new VideoView(this);
         rootRelativeLayout.addView(videoView);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) videoView.getLayoutParams();
+        params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+        params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
+        videoView.setLayoutParams(params);
         videoView.setVideoURI(videoUri);
         videoView.requestFocus();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -122,5 +133,26 @@ public class SplashActivity extends Activity {
                 rootRelativeLayout.removeView(videoView);
             }
         });
+    }
+    public void onClick(View v) {
+        int viewId = v.getId();
+        switch (viewId) {
+            case R.id.savedFaeriesButton: {
+                startActivity(new Intent(this, SavedFaeriesActivity.class));
+            }
+            break;
+            case R.id.autoGraphButton: {
+                startActivity(new Intent(this, AutoGraphsActivity.class));
+            }
+            break;
+            case R.id.infoButton: {
+                startActivity(new Intent(this, InfoActivity.class));
+            }
+            break;
+            case R.id.faeryChooseImageView: {
+                startActivity(new Intent(this, FaeryChooseActivity.class));
+            }
+            break;
+        }
     }
 }

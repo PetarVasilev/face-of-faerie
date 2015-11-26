@@ -1,0 +1,215 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:background="@drawable/infoscreenbackground"
+    android:id="@+id/rootRelativeLayout"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/contentScrollView"
+        android:scrollbars="none"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:layout_above="@+id/homeButton"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/instructionsImageView"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/instructionslabel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/creditsImageView"
+                android:alpha="0.9"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/creditslabel"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+            <ImageView
+                android:id="@+id/rateImageView"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ratethisappbtn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/shareImageView"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/sharethisappbtn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/moreImageView"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/morefromwoflabel"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+            <ImageView
+                android:alpha="0.5"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/seperator_line"
+                android:layout_height="4dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:id="@+id/pathWaysToFaeryImageView"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/pathwaystofaeryappbtn"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </ImageView>
+                <ImageView
+                    android:id="@+id/faeriesTalesImageView"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/faeriestalesbtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </ImageView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:id="@+id/trollsBookImageView"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/trollsbookbtn"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </ImageView>
+                <ImageView
+                    android:id="@+id/lessonsLearnedImageView"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/lessonslearnedbtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </ImageView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:id="@+id/wendyAFAImageView"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/wendyafabtn"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </ImageView>
+                <ImageView
+                    android:id="@+id/brianAFAImageView"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/brianafabtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </ImageView>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/facebookOfImageView"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/facebookrofbtn"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/twitterOfImageView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/twitterrofbtn"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/pinterestOfImageView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/pinterestwofbtn"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/worldOfImageView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/worldoffroudcombtn"
+                android:layout_height="30dp" />
+            <ImageView
+                android:id="@+id/amazonStoreUKImageView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/amazonukbtn"
+                android:layout_height="30dp" />
+            <ImageView
+                android:layout_marginRight="20dp"
+                android:alpha="0.5"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:background="@drawable/seperator_line"
+                android:layout_height="4dp" />
+            <ImageView
+                android:id="@+id/facebookBBPImageView"
+                android:layout_width="match_parent"
+                android:src="@drawable/facebookbbpbtn"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/twitterBPPImageView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/twitterbbpbtn"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/pinterestBBPImageView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/pinterestbbpbtn"
+                android:layout_height="40dp" />
+            <ImageView
+                android:id="@+id/bbpCreationsImageView"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:alpha="0.9"
+                android:src="@drawable/bbpcreationsbtn"
+                android:layout_height="30dp" />
+            <ImageView
+                android:id="@+id/amazonStoreUSImageView"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:src="@drawable/amazonusbtn"
+                android:layout_height="30dp" />
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/infoscreenbackground_overlay"
+        android:layout_height="match_parent"></RelativeLayout>
+    <Button
+        android:layout_width="40dp"
+        android:background="@drawable/home"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/homeButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="40dp" />
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:background="@drawable/infoscreenbackground"
+    android:id="@+id/rootRelativeLayout"
+    android:paddingTop="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingBottom="20dp"
+    android:layout_height="match_parent" tools:context=".SplashActivity">
+    <ImageView
+        android:layout_width="210dp"
+        android:id="@+id/titleImageView"
+        android:src="@drawable/autographslabel"
+        android:layout_centerHorizontal="true"
+        android:layout_height="35dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/titleImageView"
+        android:layout_marginRight="30dp"
+        android:alpha="0.7"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/seperator_line"
+        android:layout_height="4dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/faeryScrollView"
+        android:layout_above="@+id/avatarImageView"
+        android:layout_below="@+id/titleImageView"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:id="@+id/autoGraphImageView"
+                android:src="@drawable/autographpagetextimage"
+                android:layout_height="500dp" />
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:layout_width="40dp"
+        android:background="@drawable/home"
+        android:id="@+id/homeButton"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="40dp" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/avatarImageView"
+        android:src="@drawable/faerycomeimage"
+        android:layout_above="@+id/homeButton"
+        android:layout_height="150dp" />
+</RelativeLayout>
