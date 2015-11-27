@@ -6,6 +6,10 @@ package com.faceoffaerie.contants;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Constants {
 
 	public final static int MSG_SUCCESS = 0;
@@ -44,5 +48,42 @@ public class Constants {
 		return pref.getFloat("density", 1.0f);
 
 	}
-
+	public static String readFaerieChooseFromAssetsPlist(Context context) {
+		StringBuffer sb = new StringBuffer();
+		BufferedReader br=null;
+		try {
+			br = new BufferedReader(new InputStreamReader(context.getAssets().open("faerie_choose.plist")));
+			String temp;
+			while ((temp = br.readLine()) != null)
+				sb.append(temp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close(); // stop reading
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return sb.toString();
+	}
+	public static String readYouChooseFromAssetsPlist(Context context) {
+		StringBuffer sb = new StringBuffer();
+		BufferedReader br=null;
+		try {
+			br = new BufferedReader(new InputStreamReader(context.getAssets().open("you_choose.plist")));
+			String temp;
+			while ((temp = br.readLine()) != null)
+				sb.append(temp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				br.close(); // stop reading
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return sb.toString();
+	}
 }
