@@ -91,6 +91,12 @@ public class InfoMenuFragment extends Fragment implements OnClickListener {
 		bbpCreationsImageView = (ImageView) view.findViewById(R.id.bbpCreationsImageView);
 		amazonStoreUSImageView = (ImageView) view.findViewById(R.id.amazonStoreUSImageView);
 		contentScrollView = (ScrollView) view.findViewById(R.id.contentScrollView);
+
+		if (InfoActivity.getInstance().fromFaeryChoose) {
+			homeButton.setBackgroundResource(R.drawable.close);
+		} else {
+			homeButton.setBackgroundResource(R.drawable.home);
+		}
 	}
 	@Override
 	public void onPause() {

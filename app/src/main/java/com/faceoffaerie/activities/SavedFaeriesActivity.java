@@ -12,6 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.faceoffaerie.R;
+import com.faceoffaerie.adapter.SavedFaerieListAdapter;
+import com.faceoffaerie.contants.PlistInfo;
+import com.faceoffaerie.db.Dao;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -32,6 +37,8 @@ public class SavedFaeriesActivity extends BaseActivity implements OnClickListene
 
     @InjectView(R.id.faeryListView)
     ListView faeryListView;
+
+    private ArrayList<PlistInfo> savedFaeries = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,13 @@ public class SavedFaeriesActivity extends BaseActivity implements OnClickListene
     }
 
     public void initData() {
-
+        Dao dao = new Dao(this);
+        dao.open();
+        savedFaeries = dao.getFavourFunc();
+        dao.close();
+        SavedFaerieListAdapter savedFaerieListAdapter = new SavedFaerieListAdapter(this, savedFaeries, faeryListView);
+        faeryListView.setAdapter(savedFaerieListAdapter);
+        savedFaerieListAdapter.notifyDataSetChanged();
     }
     public void onClick(View v) {
         int viewId = v.getId();

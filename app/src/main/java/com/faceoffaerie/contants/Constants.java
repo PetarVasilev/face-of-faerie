@@ -3,8 +3,11 @@
  */
 package com.faceoffaerie.contants;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.view.ContextThemeWrapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -85,5 +88,16 @@ public class Constants {
 			}
 		}
 		return sb.toString();
+	}
+	public static void showMessage(Context context, String msg) {
+		new AlertDialog.Builder(new ContextThemeWrapper(context, android.R.style.Theme_Holo_Light))
+				.setTitle("Saved!")
+				.setMessage(msg)
+				.setCancelable(false)
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				}).create().show();
 	}
 }

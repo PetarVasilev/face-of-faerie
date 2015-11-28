@@ -26,6 +26,7 @@ public class InfoActivity extends BaseActivity implements OnClickListener{
     public InfoMenuFragment infoMenuFragment = null;
     public InfoInstructionsFragment infoInstructionsFragment = null;
     public InfoCreditsFragment infoCreditsFragment = null;
+    public boolean fromFaeryChoose = false;
 
     public static InfoActivity getInstance() {
         return infoActivity;
@@ -51,6 +52,8 @@ public class InfoActivity extends BaseActivity implements OnClickListener{
     }
 
     public void initData() {
+        fromFaeryChoose = getIntent().getBooleanExtra("fromFaeryChoose", false);
+
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         infoMenuFragment = InfoMenuFragment.newInstance(MENUFRAGMENT);
