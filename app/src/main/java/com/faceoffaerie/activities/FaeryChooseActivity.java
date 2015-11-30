@@ -162,7 +162,7 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
 
         InputStream ims = null;
         try {
-            ims = getAssets().open(String.format("faerie%d.png", index));
+            ims = getAssets().open(String.format("faerie%d.png", index + 1));
             Drawable d = Drawable.createFromStream(ims, null);
             faerieImageView.setImageDrawable(d);
 
@@ -293,7 +293,7 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
         }
     }
     private String prepareSdcardImage() {
-        String faeriePath = String.format("faerie%d.png", selectedIndex);
+        String faeriePath = String.format("faerie%d.png", selectedIndex + 1);
         return "file://" + copyAssets(faeriePath);
     }
     public int saveFaeryToDB(PlistInfo info, int force) {
@@ -433,8 +433,7 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
             if (faerieChooseList != null && faerieChooseList.size() > 0) {
                 Random random = new Random(System.currentTimeMillis());
                 selectedIndex = random.nextInt(faerieChooseList.size());
-                if (selectedIndex == 0)
-                    selectedIndex = faerieChooseList.size();
+                selectedIndex = selectedIndex % faerieChooseList.size();
                 showFaerieChoose(selectedIndex);
             }
         }
