@@ -19,6 +19,7 @@ import android.widget.VideoView;
 
 import com.faceoffaerie.R;
 import com.faceoffaerie.contants.Constants;
+import com.parse.ParseAnalytics;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -111,6 +112,8 @@ public class SplashActivity extends BaseActivity implements OnClickListener{
     }
 
     public void initData() {
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash_animation_640x1136);
         videoView = new VideoView(this);
         rootRelativeLayout.addView(videoView);

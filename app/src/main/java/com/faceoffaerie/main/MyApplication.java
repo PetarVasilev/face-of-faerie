@@ -24,10 +24,15 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package com.faceoffaerie.main;
+
 import android.app.Application;
 import android.content.Intent;
 
 import com.faceoffaerie.services.BackgroundService;
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseInstallation;
+import com.parse.ParseUser;
 
 public class MyApplication extends Application {
 
@@ -35,5 +40,20 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		getApplicationContext().bindService(new Intent(getApplicationContext(), BackgroundService.class), null, BIND_AUTO_CREATE);
+
+		// Enable Local Datastore.
+		Parse.enableLocalDatastore(this);
+
+		// Add your initialization code here
+		Parse.initialize(this, "jcARjQoL20GMjnswvxPvaevS8XkGzrsXLwCXOBP8", "6ZRmwOfZ7HTRB5B0Pwewqx7lNVxVVIxiiQx1XQLH");
+		ParseInstallation.getCurrentInstallation().saveInBackground();
+
+		ParseUser.enableAutomaticUser();
+		ParseACL defaultACL = new ParseACL();
+		// Optionally enable public read access.
+		defaultACL.setPublicReadAccess(true);
+		defaultACL.setPublicWriteAccess(true);
+		ParseACL.setDefaultACL(defaultACL, true);
+
 	}
 }
