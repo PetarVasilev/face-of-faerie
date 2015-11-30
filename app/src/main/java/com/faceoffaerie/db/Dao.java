@@ -54,6 +54,12 @@ public class Dao {
 				info.fileName = u.getString(1);
 				info.name = u.getString(2);
 				info.reading = u.getString(3);
+				info.iPad_Left_Eye_x = u.getInt(4);
+				info.iPad_Mouth_y = u.getInt(5);
+				info.iPad_Right_Eye_x = u.getInt(6);
+				info.iPhone_Left_Eye_x = u.getInt(7);
+				info.iPhone_Mouth_y = u.getInt(8);
+				info.iPhone_Right_Eye_x = u.getInt(9);
 				list.add(info);
 			} catch (Exception e) {
 			}
@@ -90,6 +96,12 @@ public class Dao {
 		values.put("fileName", info.fileName);
 		values.put("name", info.name);
 		values.put("reading", info.reading);
+		values.put("iPad_Left_Eye_x", info.iPad_Left_Eye_x);
+		values.put("iPad_Mouth_y", info.iPad_Mouth_y);
+		values.put("iPad_Right_Eye_x", info.iPad_Right_Eye_x);
+		values.put("iPhone_Left_Eye_x", info.iPhone_Left_Eye_x);
+		values.put("iPhone_Mouth_y", info.iPhone_Mouth_y);
+		values.put("iPhone_Right_Eye_x", info.iPhone_Right_Eye_x);
 		db.insert(FAVOUR_DB_NAME, null, values);
 		values = null;
 		return 0;
@@ -115,7 +127,13 @@ public class Dao {
 			sb.append("PID INTEGER primary key autoincrement,");
 			sb.append("fileName VARCHAR(100),");
 			sb.append("name VARCHAR(50),");
-			sb.append("reading VARCHAR(200)");
+			sb.append("reading VARCHAR(200),");
+			sb.append("iPad_Left_Eye_x INTEGER,");
+			sb.append("iPad_Mouth_y INTEGER,");
+			sb.append("iPad_Right_Eye_x INTEGER,");
+			sb.append("iPhone_Left_Eye_x INTEGER,");
+			sb.append("iPhone_Mouth_y INTEGER,");
+			sb.append("iPhone_Right_Eye_x INTEGER");
 			sb.append(")");
 			db.execSQL(sb.toString());
 		}

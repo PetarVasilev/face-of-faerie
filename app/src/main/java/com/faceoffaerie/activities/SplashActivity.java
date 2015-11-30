@@ -107,6 +107,7 @@ public class SplashActivity extends BaseActivity implements OnClickListener{
         autoGraphButton.setOnClickListener(this);
         infoButton.setOnClickListener(this);
         faeryChooseImageView.setOnClickListener(this);
+        youChooseImageView.setOnClickListener(this);
     }
 
     public void initData() {
@@ -153,6 +154,11 @@ public class SplashActivity extends BaseActivity implements OnClickListener{
                 startActivity(new Intent(this, FaeryChooseActivity.class));
             }
             break;
+            case R.id.youChooseImageView: {
+                startActivity(new Intent(this, FaeryCameraActivity.class));
+            }
+            break;
+
         }
     }
 }

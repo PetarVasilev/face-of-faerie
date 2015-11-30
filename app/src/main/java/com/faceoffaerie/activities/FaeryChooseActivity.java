@@ -3,11 +3,18 @@ package com.faceoffaerie.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -25,7 +32,11 @@ import com.faceoffaerie.contants.PlistInfo;
 import com.faceoffaerie.db.Dao;
 import com.faceoffaerie.parser.ParsePlistParser;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -55,6 +66,10 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
 
     private ArrayList<PlistInfo> faerieChooseList;
     private int selectedIndex = 0;
+    private Handler mHandler = null;
+    private boolean flag = true;
+    private int index = 0;
+    private int intervalTime = 80;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +80,23 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
         initView();
         setListener();
         initData();
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+
+                super.handleMessage(msg);
+
+                switch (msg.what) {
+                    case Constants.MSG_SUCCESS: {
+                        int i = msg.arg1;
+                        symbolImageView.setBackgroundResource(Constants.animArray[i]);
+                    }
+                    break;
+                }
+            }
+
+        };
     }
 
     public void initView() {
@@ -77,17 +109,30 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
 
         faerieRelativeLayout.setVisibility(View.GONE);
         menuLinearLayout.setVisibility(View.GONE);
-    }
 
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) symbolImageView.getLayoutParams();
+        params.width = Constants.getWidth(this);
+        params.height = params.width;
+        symbolImageView.setLayoutParams(params);
+    }
+    public void showAnimation() {
+        flag = true;
+        intervalTime = 80;
+        AnimationTask animationTask = new AnimationTask();
+        animationTask.execute();
+    }
     public void setListener() {
-        symbolImageView.setOnClickListener(new OnClickListener() {
+        symbolImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (faerieChooseList != null && faerieChooseList.size() > 0) {
-                    Random random = new Random(System.currentTimeMillis());
-                    selectedIndex = random.nextInt(faerieChooseList.size());
-                    showFaerieChoose(selectedIndex);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    intervalTime = 30;
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    flag = false;
+                    return false;
                 }
+                return false;
             }
         });
     }
@@ -96,19 +141,31 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
         PlistInfo selectedInfo = faerieChooseList.get(index);
         faerieNameTextView.setText(selectedInfo.name);
         faerieReadingTextView.setText(selectedInfo.reading);
+        InputStream ims = null;
         try {
-            InputStream ims = getAssets().open(String.format("faerie%d.png", index));
+            ims = getAssets().open(String.format("faerie%d.png", index));
             Drawable d = Drawable.createFromStream(ims, null);
             faerieImageView.setImageDrawable(d);
         } catch (Exception e) {}
+        finally {
+            if (ims != null) {
+                try {
+                    ims.close();
+                } catch (IOException e) {
+                    // NOOP
+                }
+            }
+        }
     }
     public void initData() {
         String xml = Constants.readFaerieChooseFromAssetsPlist(this);
         ParsePlistParser pp = new ParsePlistParser();
         faerieChooseList = pp.parsePlist(xml);
+        showAnimation();
     }
     public void onDestroy() {
         super.onDestroy();
+        flag = false;
         BitmapDrawable d = (BitmapDrawable) faerieImageView.getDrawable();
         if (d != null && d.getBitmap() != null)
             d.getBitmap().recycle();
@@ -151,6 +208,7 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
                 faerieImageView.setImageBitmap(null);
                 faerieRelativeLayout.setVisibility(View.GONE);
                 hideMenuLayout();
+                showAnimation();
             }
             break;
             case R.id.saveMenuImageView: {
@@ -176,10 +234,40 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }
-
+                hideMenuLayout();
             }
             break;
+            case R.id.facebookMenuImageView: {
+                String text = String.format("This is the message the faery \"%s\" has for me.\n %s\n\n You can get the new World of Froud app at:\n https://itunes.apple.com/us/app/faces-of-faerie/id874271272?ls=1&mt=8", faerieChooseList.get(selectedIndex).name, faerieChooseList.get(selectedIndex).reading);
+                shareToFacebook(FaeryChooseActivity.this, text, Uri.parse(prepareSdcardImage()));
+                hideMenuLayout();
+            }
+            break;
+            case R.id.twitterMenuImageView: {
+                String text = "Faces of Faerie!\n You can get the new World of Froud app at:\n https://itunes.apple.com/us/app/faces-of-faerie/id874271272?ls=1&mt=8\"";
+                shareToTwitter(FaeryChooseActivity.this, text, Uri.parse(prepareSdcardImage()));
+                hideMenuLayout();
+            }
+            break;
+            case R.id.emailMenuImageView: {
+                String subject = String.format("Check out my Faery for Today: %s", faerieChooseList.get(selectedIndex).name);
+                String text = String.format("This is the message the faery \"%s\" has for me.\n %s\n\n You can get the new World of Froud app at:\n https://itunes.apple.com/us/app/faces-of-faerie/id874271272?ls=1&mt=8", faerieChooseList.get(selectedIndex).name, faerieChooseList.get(selectedIndex).reading);
+                shareToEmail(FaeryChooseActivity.this, subject, text, Uri.parse(prepareSdcardImage()));
+                hideMenuLayout();
+            }
+            break;
+            case R.id.messageMenuImageView: {
+                String text = String.format("This is the message the faery \"%s\" has for me.\n %s\n\n You can get the new World of Froud app at:\n https://itunes.apple.com/us/app/faces-of-faerie/id874271272?ls=1&mt=8", faerieChooseList.get(selectedIndex).name, faerieChooseList.get(selectedIndex).reading);
+                shareToSMS(FaeryChooseActivity.this, text, Uri.parse(prepareSdcardImage()));
+                hideMenuLayout();
+            }
+            break;
+
         }
+    }
+    private String prepareSdcardImage() {
+        String faeriePath = String.format("faerie%d.png", selectedIndex);
+        return "file://" + copyAssets(faeriePath);
     }
     public int saveFaeryToDB(PlistInfo info, int force) {
         Dao dao = new Dao(FaeryChooseActivity.this);
@@ -240,5 +328,94 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
             }
         });
         menuLinearLayout.startAnimation(animation);
+    }
+    private String copyAssets(String assetFileName) {
+        AssetManager assetManager = getAssets();
+        File outFile = null;
+        if (assetFileName != null) {
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+                in = assetManager.open(assetFileName);
+                File directory = new File(Environment.getExternalStorageDirectory() + File.separator + getResources().getString(R.string.app_name));
+                if (!directory.exists())
+                    directory.mkdir();
+                outFile = new File(directory, assetFileName);
+                out = new FileOutputStream(outFile);
+                copyFile(in, out);
+            } catch(IOException e) {
+            }
+            finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        // NOOP
+                    }
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        // NOOP
+                    }
+                }
+            }
+        }
+        if (outFile != null) {
+            return outFile.getAbsolutePath();
+        } else {
+            return null;
+        }
+    }
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while((read = in.read(buffer)) != -1){
+            out.write(buffer, 0, read);
+        }
+    }
+    private class AnimationTask extends AsyncTask<String, Void, String> {
+        private int count;
+        @Override
+        protected String doInBackground(String... params) {
+            count = 0;
+            while (flag) {
+                if (intervalTime == 30)
+                    count++;
+                else
+                    count = 0;
+                if (count > 180)
+                    flag = false;
+                index++;
+                if (index > 61)
+                    index = 0;
+                try {
+                    Message msg = new Message();
+                    msg.what = Constants.MSG_SUCCESS;
+                    msg.arg1 = index;
+                    mHandler.sendMessage(msg);
+                    Thread.sleep(intervalTime);
+                } catch (Exception e) {
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            if (faerieChooseList != null && faerieChooseList.size() > 0) {
+                Random random = new Random(System.currentTimeMillis());
+                selectedIndex = random.nextInt(faerieChooseList.size());
+                if (selectedIndex == 0)
+                    selectedIndex = faerieChooseList.size();
+                showFaerieChoose(selectedIndex);
+            }
+        }
+        @Override
+        protected void onPreExecute() {
+        }
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
     }
 }

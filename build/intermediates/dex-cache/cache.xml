@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/Users/petarvasilev/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.0.0/3a10b25b6820e19102e118711afe6a66c0bae123/butterknife-6.0.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3a10b25b6820e19102e118711afe6a66c0bae123">
-        <dex dex="/Volumes/WORK/Work/FaceofFaerie/android/face-of-faerie/app/build/intermediates/pre-dexed/debug/butterknife-6.0.0-0e5a65fbc2c8b4c9714139a17d62c0daff3d4019.jar" />
-    </item>
-    <item
         jar="/Volumes/WORK/Work/FaceofFaerie/android/face-of-faerie/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -21,6 +14,13 @@
         revision="23.0.1"
         sha1="92e3fc113ec3ee36b64603a38857b95700025633">
         <dex dex="/Volumes/WORK/Work/FaceofFaerie/android/face-of-faerie/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.0-95cb66ddd7b3a546f20462a0e93b3bf2f6ac1114.jar" />
+    </item>
+    <item
+        jar="/Users/petarvasilev/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/6.0.0/3a10b25b6820e19102e118711afe6a66c0bae123/butterknife-6.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3a10b25b6820e19102e118711afe6a66c0bae123">
+        <dex dex="/Volumes/WORK/Work/FaceofFaerie/android/face-of-faerie/app/build/intermediates/pre-dexed/debug/butterknife-6.0.0-0e5a65fbc2c8b4c9714139a17d62c0daff3d4019.jar" />
     </item>
     <item
         jar="/Volumes/WORK/Work/FaceofFaerie/android/face-of-faerie/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"

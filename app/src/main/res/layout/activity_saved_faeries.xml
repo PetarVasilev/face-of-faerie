@@ -22,19 +22,20 @@
         android:alpha="0.7"
         android:background="@drawable/seperator_line"
         android:layout_height="4dp" />
-    <ListView
+    <com.faceoffaerie.swipemenulistview.SwipeMenuListView
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/faeryListView"
         android:layout_above="@+id/swipeTextView"
         android:dividerHeight="0dp"
         android:scrollbars="none"
         android:divider="@android:color/transparent"
+        android:clickable="false"
         android:layout_below="@+id/titleImageView"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="15dp"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"></com.faceoffaerie.swipemenulistview.SwipeMenuListView>
     <Button
         android:layout_width="40dp"
         android:background="@drawable/home"

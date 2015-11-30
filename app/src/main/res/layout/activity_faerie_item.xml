@@ -16,12 +16,15 @@
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:textColor="@color/brown_text_color"
+            android:singleLine="true"
             android:textSize="20sp"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/dateTextView"
+            android:textSize="13sp"
+            android:singleLine="true"
             android:layout_below="@+id/nameTextView"
             android:textColor="@color/brown_text_color"
             android:layout_marginTop="10dp"

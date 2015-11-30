@@ -8,4 +8,10 @@ public class PlistInfo implements Serializable{
 	public String 			fileName = "";
 	public String 			name = "";
 	public String 			reading = "";
+	public int 				iPad_Left_Eye_x = 0;
+	public int 				iPad_Mouth_y = 0;
+	public int 				iPad_Right_Eye_x = 0;
+	public int 				iPhone_Left_Eye_x = 0;
+	public int 				iPhone_Mouth_y = 0;
+	public int 				iPhone_Right_Eye_x = 0;
 }
