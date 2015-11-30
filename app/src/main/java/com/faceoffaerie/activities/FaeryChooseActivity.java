@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -30,6 +31,7 @@ import com.faceoffaerie.R;
 import com.faceoffaerie.contants.Constants;
 import com.faceoffaerie.contants.PlistInfo;
 import com.faceoffaerie.db.Dao;
+import com.faceoffaerie.interfaces.BackgroundMusicModel;
 import com.faceoffaerie.parser.ParsePlistParser;
 
 import java.io.File;
@@ -106,9 +108,12 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
         titleTextView.setTypeface(typeface);
         faerieNameTextView.setTypeface(typeface);
         faerieReadingTextView.setTypeface(typeface);
+        faerieReadingTextView.setTextSize(30);
 
         faerieRelativeLayout.setVisibility(View.GONE);
         menuLinearLayout.setVisibility(View.GONE);
+        faerieNameTextView.setVisibility(View.GONE);
+        faerieReadingTextView.setVisibility(View.GONE);
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) symbolImageView.getLayoutParams();
         params.width = Constants.getWidth(this);
@@ -137,15 +142,37 @@ public class FaeryChooseActivity extends BaseActivity implements OnClickListener
         });
     }
     public void showFaerieChoose(int index) {
+        BackgroundMusicModel.getInstance().changeState(true);
+
         faerieRelativeLayout.setVisibility(View.VISIBLE);
         PlistInfo selectedInfo = faerieChooseList.get(index);
         faerieNameTextView.setText(selectedInfo.name);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setStartOffset(3000);
+        alphaAnimation.setDuration(1000);
+        faerieNameTextView.startAnimation(alphaAnimation);
+        faerieNameTextView.setVisibility(View.VISIBLE);
+
         faerieReadingTextView.setText(selectedInfo.reading);
+        alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setStartOffset(1000);
+        alphaAnimation.setDuration(3000);
+        faerieReadingTextView.startAnimation(alphaAnimation);
+        faerieReadingTextView.setVisibility(View.VISIBLE);
+
         InputStream ims = null;
         try {
             ims = getAssets().open(String.format("faerie%d.png", index));
             Drawable d = Drawable.createFromStream(ims, null);
             faerieImageView.setImageDrawable(d);
+
+            String fileName = selectedInfo.name;
+            if (fileName.contains(" "))
+                fileName = fileName.replaceAll(" ", "_");
+            if (fileName.contains("'"))
+                fileName = fileName.replaceAll("'", "");
+            fileName = fileName.toLowerCase();
+            Constants.playAudio(FaeryChooseActivity.this, getResources().getIdentifier(fileName, "raw", getPackageName()));
         } catch (Exception e) {}
         finally {
             if (ims != null) {

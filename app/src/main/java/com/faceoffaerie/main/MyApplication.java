@@ -31,8 +31,11 @@ import android.content.Intent;
 import com.faceoffaerie.services.BackgroundService;
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class MyApplication extends Application {
 
@@ -55,5 +58,11 @@ public class MyApplication extends Application {
 		defaultACL.setPublicWriteAccess(true);
 		ParseACL.setDefaultACL(defaultACL, true);
 
+		ParsePush.subscribeInBackground("", new SaveCallback() {
+			@Override
+			public void done(ParseException e) {
+
+			}
+		});
 	}
 }

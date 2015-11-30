@@ -112,7 +112,8 @@ public class SplashActivity extends BaseActivity implements OnClickListener{
     }
 
     public void initData() {
-        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
+        ParseAnalytics.trackAppOpened(getIntent());
 
         Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash_animation_640x1136);
         videoView = new VideoView(this);

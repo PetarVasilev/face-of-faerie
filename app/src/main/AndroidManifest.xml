@@ -71,8 +71,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"></activity>
         <activity
             android:name=".activities.FaeryChooseActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activities.FaeryCameraActivity"
             android:screenOrientation="portrait"></activity>
@@ -97,6 +96,8 @@
                 <category android:name="com.faceoffaerie" />
             </intent-filter>
         </receiver>
+        <meta-data android:name="com.parse.push.gcm_sender_id"
+            android:value="id:665268269372" />
     </application>
 
 </manifest>

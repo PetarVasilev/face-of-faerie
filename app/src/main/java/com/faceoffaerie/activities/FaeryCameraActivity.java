@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
@@ -37,6 +38,7 @@ import com.faceoffaerie.R;
 import com.faceoffaerie.contants.Constants;
 import com.faceoffaerie.contants.PlistInfo;
 import com.faceoffaerie.db.Dao;
+import com.faceoffaerie.interfaces.BackgroundMusicModel;
 import com.faceoffaerie.objects.SquareCameraPreview;
 import com.faceoffaerie.parser.ParsePlistParser;
 
@@ -102,6 +104,8 @@ public class FaeryCameraActivity extends BaseActivity implements OnClickListener
 
     public void initView() {
         ButterKnife.inject(this);
+        faerieNameTextView.setVisibility(View.GONE);
+        faerieReadingTextView.setVisibility(View.GONE);
     }
 
     public void setListener() {
@@ -279,14 +283,34 @@ public class FaeryCameraActivity extends BaseActivity implements OnClickListener
         return result;
     }
     public void showFaerieChoose(int index) {
-        PlistInfo selectedInfo = youChooseList.get(index);
+        BackgroundMusicModel.getInstance().changeState(true);
+
+        final PlistInfo selectedInfo = youChooseList.get(index);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "BarbedorSCTMed.ttf");
+        faerieNameTextView.setTypeface(typeface);
+        faerieReadingTextView.setTypeface(typeface);
+
         faerieNameTextView.setText(selectedInfo.name);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setStartOffset(3000);
+        alphaAnimation.setDuration(1000);
+        faerieNameTextView.startAnimation(alphaAnimation);
+        faerieNameTextView.setVisibility(View.VISIBLE);
+
         faerieReadingTextView.setText(selectedInfo.reading);
+        faerieReadingTextView.setTextSize(30);
+        alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setStartOffset(1000);
+        alphaAnimation.setDuration(3000);
+        faerieReadingTextView.startAnimation(alphaAnimation);
+        faerieReadingTextView.setVisibility(View.VISIBLE);
+
         InputStream ims = null;
         try {
             ims = getAssets().open(String.format("faerie%d.png", index));
             Drawable d = Drawable.createFromStream(ims, null);
             faerieImageView.setImageDrawable(d);
+
         } catch (Exception e) {}
         finally {
             if (ims != null) {
@@ -297,8 +321,30 @@ public class FaeryCameraActivity extends BaseActivity implements OnClickListener
                 }
             }
         }
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
         alphaAnimation.setDuration(2000);
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                String fileName = selectedInfo.name;
+                if (fileName.contains(" "))
+                    fileName = fileName.replaceAll(" ", "_");
+                if (fileName.contains("'"))
+                    fileName = fileName.replaceAll("'", "");
+                fileName = fileName.toLowerCase();
+                Constants.playAudio(FaeryCameraActivity.this, getResources().getIdentifier(fileName, "raw", getPackageName()));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         faerieRelativeLayout.startAnimation(alphaAnimation);
         faerieRelativeLayout.setVisibility(View.VISIBLE);
     }
@@ -483,16 +529,17 @@ public class FaeryCameraActivity extends BaseActivity implements OnClickListener
     }
 
     private void restartPreview() {
-        stopCameraPreview();
-
-        getCamera(mCameraID);
-        startCameraPreview();
-
         recognizedFace = new Face();
         switchRelativeLayout.setVisibility(View.VISIBLE);
         autoRelativeLayout.setVisibility(View.VISIBLE);
         takeRelativeLayout.setVisibility(View.VISIBLE);
         buttonsLinearLayout.setVisibility(View.GONE);
+
+        stopCameraPreview();
+
+        getCamera(mCameraID);
+        startCameraPreview();
+
     }
 
     private int getFrontCameraID() {

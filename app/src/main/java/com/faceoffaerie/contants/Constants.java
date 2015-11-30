@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.view.ContextThemeWrapper;
 
 import com.faceoffaerie.R;
@@ -20,6 +21,7 @@ public class Constants {
 	public final static int MSG_SUCCESS = 0;
 	public final static int MSG_FAIL = 1;
 	private final static String packageName = "com.faceoffaerie";
+	private static MediaPlayer mediaPlayer;
 
 	public static void setWidth(Context context, int width) {
 		SharedPreferences.Editor editor = context.getSharedPreferences(packageName, 0).edit();
@@ -72,7 +74,6 @@ public class Constants {
 	public static float getDensity(Context context) {
 		SharedPreferences pref = context.getSharedPreferences(packageName, 0);
 		return pref.getFloat("density", 1.0f);
-
 	}
 	public static String readFaerieChooseFromAssetsPlist(Context context) {
 		StringBuffer sb = new StringBuffer();
@@ -134,4 +135,15 @@ public class Constants {
 					}
 				}).create().show();
 	}
+	public static void playAudio(Context context, int audioId) {
+		mediaPlayer = MediaPlayer.create(context, audioId);
+		mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				mp.release();
+			}
+		});
+		mediaPlayer.start();
+	}
+
 }

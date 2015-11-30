@@ -24,9 +24,7 @@ public class BaseActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(layoutID);
-
 	}
-
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -63,7 +61,6 @@ public class BaseActivity extends FragmentActivity {
 				return;
 			}
 		}
-
 	}
 	public void shareToTwitter(Context context, String text, Uri uri) {
 		Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
